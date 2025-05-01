@@ -58,7 +58,7 @@ int main() {
                 unique_values.push_back(row[i]);
             }
         }
-        '''unique_values.erase(unique(unique_values.begin(), unique_values.end()), unique_values.end()); '''// 重複する要素を削除
+        // unique_values.erase(unique(unique_values.begin(), unique_values.end()), unique_values.end());
         sort(unique_values.begin(), unique_values.end());
         if (unique_values.size() == 1) { // 1つの要素しかない場合
             if (!is_digit(unique_values[0])) {
