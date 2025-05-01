@@ -1,0 +1,31 @@
+name: AutoGrade
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Compile
+      run: |
+        g++ -std=c++17 -O2 main.cpp -o arff_converter
+
+    - name: Run tests
+      run: |
+        set -e
+        for csv in tests/*.csv; do
+          arff="${csv%.csv}.arff"
+          out="out.arff"
+          echo "=== Testing $csv ==="
+          ./arff_converter "$csv" > "$out"
+          diff -u "$arff" "$out"
+        done
+
+    - name: Success message
+      run: echo "✅ All tests passed"
